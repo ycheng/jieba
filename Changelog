@@ -1,3 +1,7 @@
+2018-XX-XX: version 0.40
+1. 安裝 dict.txt.big 與 dict.txt.small, 並通過 set_default_dictionary 去進行安裝
+2. 修改 cache 檔名, 因而可以使用多字典檔.
+
 2017-08-28: version 0.39
 1. del_word支持强行拆开词语;  by @gumblex,@fxsjy
 2. 修复百分数的切词; by @fxsjy

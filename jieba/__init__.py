@@ -114,7 +114,7 @@ class Tokenizer(object):
                 cache_file = self.cache_file
             # default dictionary
             elif abs_path == DEFAULT_DICT:
-                cache_file = "jieba.cache"
+                cache_file = "jieba." + DEFAULT_DICT_NAME + ".cache"
             # custom dictionary
             else:
                 cache_file = "jieba.u%s.cache" % md5(
@@ -490,6 +490,12 @@ class Tokenizer(object):
             self.dictionary = abs_path
             self.initialized = False
 
+    def set_default_dictionary(self, set_default_dictionary):
+        global DEFAULT_DICT_NAME
+        with self.lock:
+            DEFAULT_DICT_NAME = set_default_dictionary
+            self.initialized = False
+
 
 # default Tokenizer instance
 
@@ -510,6 +516,7 @@ get_dict_file = dt.get_dict_file
 initialize = dt.initialize
 load_userdict = dt.load_userdict
 set_dictionary = dt.set_dictionary
+set_default_dictionary = dt.set_default_dictionary
 suggest_freq = dt.suggest_freq
 tokenize = dt.tokenize
 user_word_tag_tab = dt.user_word_tag_tab
