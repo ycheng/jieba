@@ -35224,3 +35224,10 @@ P={'B': {'\u4e00': -3.6544978750449433,
        '\u9f9f': -10.409437488834186,
        '\u9fa0': -15.605722129817071,
        '\u9fa2': -10.61937952828986}}
+
+if __name__ == "__main__":
+    import pprint as pp
+    print("P =", end="")
+    pp.pprint(P)
+    # import pickle
+    # pickle.dump(P, open("prob_emit.p", "wb"))

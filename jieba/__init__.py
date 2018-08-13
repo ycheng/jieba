@@ -42,7 +42,7 @@ re_eng = re.compile('[a-zA-Z0-9]', re.U)
 # \r\n|\s : whitespace characters. Will not be handled.
 re_han_default = re.compile("([\u4E00-\u9FD5a-zA-Z0-9+#&\._%]+)", re.U)
 re_skip_default = re.compile("(\r\n|\s)", re.U)
-re_han_cut_all = re.compile("([\u4E00-\u9FD5]+)", re.U)
+re_han_cut_all = re.compile("([\u4E00-\u9FD5]+)", re.U) # YC TODO
 re_skip_cut_all = re.compile("[^a-zA-Z0-9+#\n]", re.U)
 
 def setLogLevel(log_level):
@@ -57,8 +57,8 @@ class Tokenizer(object):
             self.dictionary = dictionary
         else:
             self.dictionary = _get_abs_path(dictionary)
-        self.FREQ = {}
-        self.total = 0
+        self.FREQ = {} # {"word": frequency}
+        self.total = 0 # sum of all frequency
         self.user_word_tag_tab = {}
         self.initialized = False
         self.tmp_dir = None
@@ -74,7 +74,7 @@ class Tokenizer(object):
         for lineno, line in enumerate(f, 1):
             try:
                 line = line.strip().decode('utf-8')
-                word, freq = line.split(' ')[:2]
+                word, freq = line.split(' ')[:2] # token and frequency only
                 freq = int(freq)
                 lfreq[word] = freq
                 ltotal += freq
@@ -176,6 +176,9 @@ class Tokenizer(object):
                               logtotal + route[x + 1][0], x) for x in DAG[idx])
 
     def get_DAG(self, sentence):
+        """
+        For the sentense, return all possible DAG that exist in database.
+        """
         self.check_initialized()
         DAG = {}
         N = len(sentence)
@@ -194,7 +197,10 @@ class Tokenizer(object):
         return DAG
 
     def __cut_all(self, sentence):
-        dag = self.get_DAG(sentence)
+        """
+        Full Mode:
+        """
+        dag = self.get_DAG(sentence) # YC TODO
         old_j = -1
         for k, L in iteritems(dag):
             if len(L) == 1 and k > old_j:
@@ -232,7 +238,7 @@ class Tokenizer(object):
     def __cut_DAG(self, sentence):
         DAG = self.get_DAG(sentence)
         route = {}
-        self.calc(sentence, DAG, route)
+        self.calc(sentence, DAG, route) # YC TODO: store log data in route, what's that ?
         x = 0
         buf = ''
         N = len(sentence)
@@ -293,7 +299,7 @@ class Tokenizer(object):
             cut_block = self.__cut_DAG
         else:
             cut_block = self.__cut_DAG_NO_HMM
-        blocks = re_han.split(sentence)
+        blocks = re_han.split(sentence) # YC Why ? 先斷句 ?
         for blk in blocks:
             if not blk:
                 continue

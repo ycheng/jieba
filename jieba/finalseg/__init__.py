@@ -5,6 +5,14 @@ import sys
 import pickle
 from .._compat import *
 
+"""
+BEMS
+B: begin of term
+E: end of term
+M: middle of term
+S: single word term
+"""
+
 MIN_FLOAT = -3.14e100
 
 PROB_START_P = "prob_start.p"
